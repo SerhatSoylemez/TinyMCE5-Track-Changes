@@ -23,3 +23,12 @@ trackchanges.js dosyasını indirip aşağıdaki şekilde kaydedebilirsiniz.
 </body>
 </html>
 ```
+## Biçimlendirmeyi Göster:
+![](Images/tinymce1.png)
+## Biçimlendirmeyi Gizle:
+![](Images/tinymce2.png)
+## Biçimlendirmeyi Göster Gizle Menüsü:
+![](Images/tinymce3.png)
+## Kaydedilen metnin kaynak kodları:
+![](Images/tinymce4.png)
+
