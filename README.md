@@ -1,7 +1,7 @@
-# TinyMCE5-Save-MenuItem
-TinyMCE 5 WYSIWYG editöründe File(Dosya) menüsü altında çalışan Save(Kaydet) menü elemanı eklemek için
+# TinyMCE5-Track-Changes
+TinyMCE 5 WYSIWYG editöründe sayfaya yeni eklenmiş metinler Advanced(Gelişmiş) menüsü altında bulunan Formats(Biçimler) menüsü içerisinden Inserted(Eklenmiş) biçimi seçilerek işaretlenebilir veya silinmeye karar verilmiş metinler Deleted(Silinmiş) biçimi seçilerek işaretlenebilir. İşaretlemeler aktif hale getirildiğinde yada kaydedildiğinde silinmiş metinler gözükmeyecektir. Track Changes(Değişiklikleri İzleme) işlemi için &lt;ins datetime=""&gt; ve &lt;del datetime=""&gt; HTML elementleri kullanılmıştır.
 
-editor.js dosyasını indirip aşağıdaki şekilde kaydedebilirsiniz.
+trackchanges.js dosyasını indirip aşağıdaki şekilde kaydedebilirsiniz.
 
 ```
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ editor.js dosyasını indirip aşağıdaki şekilde kaydedebilirsiniz.
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <script src="https://.../tinymce/5/tinymce.min.js" ></script>
-  <script src="editor.js"></script> <!-- buraya kaydedin -->
+  <script src="trackchanges.js"></script> <!-- buraya kaydedin -->
 
 </head>
 <body>
