@@ -53,11 +53,11 @@ trackchanges.js dosyasını indirip aşağıdaki şekilde kaydedebilirsiniz:
 </body>
 </html>
 ```
-## Biçimlendirmeyi Göster:
+## Biçimlendirmeyi İşaretle:
 ![](Images/tinymce1.png)
-## Biçimlendirmeyi Gizle:
+## Biçimlendirmeyi Göster:
 ![](Images/tinymce2.png)
-## Biçimlendirmeyi Göster Gizle Menüsü:
+## Biçimlendirmeyi Gizle:
 ![](Images/tinymce3.png)
 ## Kaydedilen metnin kaynak kodları:
 ![](Images/tinymce4.png)
