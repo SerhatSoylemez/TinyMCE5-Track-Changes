@@ -1,20 +1,3 @@
-tinymce.init({
-  selector: "textarea",  // change this value according to your HTML
-
-  plugins: [
-    "code trackchanges",
-  ],
-
-  toolbar: "inserttext deletetext showchanges hidechanges",
-
-  menubar: "advanced view",
-
-  menu: {
-    advanced: { title: "Advanced", items: "trackchanges" },
-    view: { title: "View", items: "code" },
-  },
-});
-
 tinymce.PluginManager.add("trackchanges", function (editor) {
 
   editor.on("init", function(e) {
