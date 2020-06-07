@@ -10,8 +10,26 @@ trackchanges.js dosyasını indirip aşağıdaki şekilde kaydedebilirsiniz.
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <script src="https://.../tinymce/5/tinymce.min.js" ></script>
-  <script src="trackchanges.js"></script> <!-- buraya kaydedin -->
+  <script src="https://.../tinymce/5/tinymce.min.js" ></script> <!-- use tinymce actual version. -->
+  <script>
+tinymce.init({
+  selector: "textarea",  // change this value according to your HTML.
+
+  plugins: [
+    "code trackchanges",
+  ],
+
+  toolbar: "inserttext deletetext showchanges hidechanges",
+
+  menubar: "advanced view",
+
+  menu: {
+    advanced: { title: "Advanced", items: "trackchanges" },
+    view: { title: "View", items: "code" }, // I add this to show the codes.
+  },
+});
+  </script>
+  <script src="trackchanges.js"></script> <!-- save plugin here -->
 
 </head>
 <body>
