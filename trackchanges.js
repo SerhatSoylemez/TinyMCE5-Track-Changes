@@ -1,66 +1,137 @@
-function insertTime() {
-  var d = new Date();
-  function addZero(i) { if (i < 10) { i = "0" + i; } return i; }
-  var insertTime = d.getFullYear() + "-" + addZero(d.getMonth() +1 ) + "-" + addZero(d.getDate());
-  return insertTime;
-}
-
 tinymce.init({
   selector: "textarea",  // change this value according to your HTML
 
-  fullpage_default_encoding: "UTF-8",
- 
   plugins: [
-    "code fullpage",
+    "code trackchanges",
   ],
 
-  toolbar: "styleselect",
-  
+  toolbar: "inserttext deletetext showchanges hidechanges",
+
   menubar: "advanced view",
 
   menu: {
-    advanced: { title: "Advanced", items: "formats trackchanges" },
+    advanced: { title: "Advanced", items: "trackchanges" },
     view: { title: "View", items: "code" },
   },
+});
 
-  style_formats: [
-    { title: "Inserted", inline: "ins", attributes: { datetime: insertTime()}, styles: {"text-decoration": "none"} },
-    { title: "Deleted", inline: "del", attributes: { datetime: insertTime()}, styles: {display: "none"} },
-  ],
+tinymce.PluginManager.add("trackchanges", function (editor) {
 
-setup: (editor) => {
+  editor.on("init", function(e) {
+    var d = new Date();
+    function addZero(i) { if (i < 10) { i = "0" + i; } return i; }
+    var insertTime = addZero(d.getDate()) + "-" + addZero(d.getMonth() +1 ) + "-" + d.getFullYear();
 
-  editor.on('init', function(e) {
-    tinymce.activeEditor.dom.addStyle("[datetime]::before { content: '('attr(datetime)') '; font-size: smaller; }");
-    tinymce.activeEditor.dom.addStyle("ins[datetime] { color: #2DC26B; text-decoration: underline !important; }");
-    tinymce.activeEditor.dom.addStyle("del[datetime] { color: #E03E2D; display: inline !important; }");
+    tinymce.activeEditor.formatter.register("inserted", {
+      inline: "ins",
+      attributes: { datetime: insertTime},
+      styles: {"text-decoration": "none"},
+    });
+
+    tinymce.activeEditor.formatter.register("deleted", {
+      inline: "del",
+      attributes: { datetime: insertTime},
+      styles: {"display": "none"},
+    });
+
+    tinymce.activeEditor.dom.addStyle(
+      " [datetime]::before { content: '('attr(datetime)') '; font-size: smaller; } " +
+      " ins[datetime] { color: #2DC26B; text-decoration: underline !important; } " +
+      " del[datetime] { color: #E03E2D; display: inline !important; } "
+    );
   });
 
   editor.ui.registry.addNestedMenuItem("trackchanges", {
     text: "Changes",
-    getSubmenuItems: () => {
+    getSubmenuItems: function() {
       return [
+
+        {
+          type: "menuitem",
+          text: "Inserted Text",
+          icon: "edit-block",
+          onAction: function() {
+            tinymce.activeEditor.formatter.apply("inserted");
+          }
+        },
+
+        {
+          type: "menuitem",
+          text: "Deleted Text",
+          icon: "remove",
+          onAction: function() {
+            tinymce.activeEditor.formatter.apply("deleted");
+          }
+        },
+
         {
           type: "menuitem",
           text: "Show Changes",
-          onAction: () => {
-            tinymce.activeEditor.dom.addStyle("[datetime]::before { content: '('attr(datetime)') '; font-size: smaller; }");
-            tinymce.activeEditor.dom.addStyle("ins[datetime] { color: #2DC26B; text-decoration: underline !important; }");
-            tinymce.activeEditor.dom.addStyle("del[datetime] { color: #E03E2D; display: inline !important; }");
+          icon: "comment-add",
+          onAction: function() {
+            tinymce.activeEditor.dom.addStyle(
+              " [datetime]::before { content: '('attr(datetime)') '; font-size: smaller; } " +
+              " ins[datetime] { color: #2DC26B; text-decoration: underline !important; } " +
+              " del[datetime] { color: #E03E2D; display: inline !important; } "
+            );
           }
         },
+
         {
           type: "menuitem",
           text: "Hide Changes",
-          onAction: () => {
-            tinymce.activeEditor.dom.addStyle("[datetime]::before { content: ''; }");
-            tinymce.activeEditor.dom.addStyle("ins[datetime] { color: initial; text-decoration: none !important; }");
-            tinymce.activeEditor.dom.addStyle("del[datetime] { color: initial; display: none !important; }");
+          icon: "comment",
+          onAction: function() {
+            tinymce.activeEditor.dom.addStyle(
+              " [datetime]::before { content: ''; } " +
+              " ins[datetime] { color: initial; text-decoration: none !important; } " +
+              " del[datetime] { color: initial; display: none !important; } "
+            );
           }
         },
+
       ];
     }
   });
 
-}
+  editor.ui.registry.addButton("inserttext", {
+    tooltip: "Inserted Text",
+    icon: "edit-block",
+    onAction: function() {
+      tinymce.activeEditor.formatter.apply("inserted");
+    }
+  });
+
+  editor.ui.registry.addButton("deletetext", {
+    tooltip: "Deleted Text",
+    icon: "remove",
+    onAction: function() {
+      tinymce.activeEditor.formatter.apply("deleted");
+    }
+  });
+
+  editor.ui.registry.addButton("showchanges", {
+    tooltip: "Show Changes",
+    icon: "comment-add",
+    onAction: function() {
+      tinymce.activeEditor.dom.addStyle(
+        " [datetime]::before { content: '('attr(datetime)') '; font-size: smaller; } " +
+        " ins[datetime] { color: #2DC26B; text-decoration: underline !important; } " +
+        " del[datetime] { color: #E03E2D; display: inline !important; } "
+      );
+    }
+  });
+
+  editor.ui.registry.addButton("hidechanges", {
+    tooltip: "Hide Changes",
+    icon: "comment",
+    onAction: function() {
+      tinymce.activeEditor.dom.addStyle(
+        " [datetime]::before { content: ''; } " +
+        " ins[datetime] { color: initial; text-decoration: none !important; } " +
+        " del[datetime] { color: initial; display: none !important; } "
+      );
+    }
+  });
+
 });
